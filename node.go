@@ -1,4 +1,4 @@
-package node
+package bidirectional
 
 type Node struct {
 	prev  *Node
@@ -6,7 +6,7 @@ type Node struct {
 	value interface{}
 }
 
-func New(prev *Node, next *Node, value interface{}) *Node {
+func CreateNode(prev *Node, next *Node, value interface{}) *Node {
 
 	return &Node{
 		prev:  prev,

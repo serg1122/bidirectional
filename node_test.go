@@ -1,4 +1,4 @@
-package node
+package bidirectional
 
 import (
 	"testing"
@@ -13,14 +13,14 @@ func Test_Node(t *testing.T) {
 	v3 := "value-3"
 	v3updated := "value-3-updated"
 
-	n1 := New(nil, nil, v1)
+	n1 := CreateNode(nil, nil, v1)
 
 	assert.IsType(t, &Node{}, n1)
 	assert.Equal(t, v1, n1.GetValue())
 	assert.Nil(t, n1.GetPrev())
 	assert.Nil(t, n1.GetNext())
 
-	n2 := New(n1, nil, v2)
+	n2 := CreateNode(n1, nil, v2)
 	n1.SetNext(n2)
 
 	assert.IsType(t, &Node{}, n1.GetNext())
@@ -29,7 +29,7 @@ func Test_Node(t *testing.T) {
 	assert.Equal(t, v1, n2.GetPrev().GetValue())
 	assert.Equal(t, v2, n1.GetNext().GetValue())
 
-	n3 := New(nil, nil, v3)
+	n3 := CreateNode(nil, nil, v3)
 	n3.SetPrev(n2)
 	n2.SetNext(n3)
 

@@ -1,10 +1,12 @@
-package bidirectionallist
+package list
 
-import "github.com/serg1122/bidirectionallist/node"
+import (
+	"github.com/serg1122/bidirectional"
+)
 
 type List struct {
-	first *node.Node
-	last  *node.Node
+	first *bidirectional.Node
+	last  *bidirectional.Node
 }
 
 func New() *List {
@@ -19,7 +21,7 @@ func (l *List) IsEmpty() bool {
 
 func (l *List) init(value interface{}) {
 
-	n := node.New(nil, nil, value)
+	n := bidirectional.CreateNode(nil, nil, value)
 
 	l.first = n
 	l.last = n
@@ -32,7 +34,7 @@ func (l *List) Prepend(value interface{}) {
 		return
 	}
 
-	newFirstNode := node.New(nil, l.first, value)
+	newFirstNode := bidirectional.CreateNode(nil, l.first, value)
 	l.first.SetPrev(newFirstNode)
 	l.first = newFirstNode
 }
@@ -44,17 +46,17 @@ func (l *List) Append(value interface{}) {
 		return
 	}
 
-	newLastNode := node.New(l.last, nil, value)
+	newLastNode := bidirectional.CreateNode(l.last, nil, value)
 	l.last.SetLast(newLastNode)
 	l.last = newLastNode
 }
 
-func (l List) GetFirstNode() *node.Node {
+func (l List) GetFirstNode() *bidirectional.Node {
 
 	return l.first
 }
 
-func (l List) GetLastNode() *node.Node {
+func (l List) GetLastNode() *bidirectional.Node {
 
 	return l.last
 }
