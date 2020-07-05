@@ -47,7 +47,7 @@ func (l *List) Append(value interface{}) {
 	}
 
 	newLastNode := bidirectional.CreateNode(l.last, nil, value)
-	l.last.SetLast(newLastNode)
+	l.last.SetNext(newLastNode)
 	l.last = newLastNode
 }
 
