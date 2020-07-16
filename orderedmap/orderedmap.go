@@ -55,6 +55,9 @@ func (om *OrderedMap) Set(key string, value interface{}) {
 
 func (om OrderedMap) Get(key string) (interface{}, bool) {
 
+	om.mu.Lock()
+	defer om.mu.Unlock()
+
 	if om.HasKey(key) {
 
 		return om.pairs[key], true
