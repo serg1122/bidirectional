@@ -1,12 +1,17 @@
 package list
 
 import (
+	"sync"
+
 	"github.com/serg1122/bidirectional"
 )
 
 type List struct {
 	first *bidirectional.Node
 	last  *bidirectional.Node
+
+	mu   sync.Mutex
+	once sync.Once
 }
 
 func New() *List {
@@ -29,8 +34,11 @@ func (l *List) init(value interface{}) {
 
 func (l *List) Prepend(value interface{}) {
 
+	l.mu.Lock()
+	defer l.mu.Unlock()
+
 	if l.IsEmpty() {
-		l.init(value)
+		l.once.Do(func() { l.init(value) })
 		return
 	}
 
@@ -41,8 +49,11 @@ func (l *List) Prepend(value interface{}) {
 
 func (l *List) Append(value interface{}) {
 
+	l.mu.Lock()
+	defer l.mu.Unlock()
+
 	if l.IsEmpty() {
-		l.init(value)
+		l.once.Do(func() { l.init(value) })
 		return
 	}
 

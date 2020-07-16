@@ -1,6 +1,8 @@
 package orderedmap
 
 import (
+	"sync"
+
 	"github.com/serg1122/bidirectional"
 	"github.com/serg1122/bidirectional/list"
 )
@@ -8,6 +10,8 @@ import (
 type OrderedMap struct {
 	list  *list.List
 	pairs map[string]*bidirectional.Node
+
+	mu sync.Mutex
 }
 
 func New() *OrderedMap {
@@ -36,6 +40,9 @@ func (om OrderedMap) HasKey(key string) bool {
 
 func (om *OrderedMap) Set(key string, value interface{}) {
 
+	om.mu.Lock()
+	defer om.mu.Unlock()
+
 	if om.HasKey(key) {
 
 		om.pairs[key].SetValue(value)
@@ -57,6 +64,9 @@ func (om OrderedMap) Get(key string) (interface{}, bool) {
 }
 
 func (om *OrderedMap) Remove(key string) bool {
+
+	om.mu.Lock()
+	defer om.mu.Unlock()
 
 	if !om.HasKey(key) {
 
